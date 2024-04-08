@@ -4,7 +4,7 @@ const timestamps = require("mongoose-timestamp");
 const commentSchema = mongoose.Schema({
     Author: { type: String, ref: "User" },
     Likes : {type: String, ref: "User" },
-    CommentedOn: { type: String, ref: "Post" },
+    Comment: {type: String},
     postId: { type: String, ref: "Post" },
     CommentReply: [{ commentedBy:{ type: String, ref: "User"}, reply:{type: String} }]
 });

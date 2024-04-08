@@ -23,15 +23,21 @@ exports.getPostbyUser = async (Author) => {
   .populate({ path: "Likes", select: "FullName" })
 };
 
+exports.getPostbyId = async (id) => {
+  return await Post.findOne({ _id: id })
+  .populate({ path: "Author", select: "FullName ProfilePic Followers" })
+};
 
-exports.myfeed = async () => {
+exports.myfeed = async (id) => {
+  console.log(id)
   return await Post.find({})
-  .populate({ path: "Author", select: "FullName ProfilePic" })
+    .populate({ path: "Author", select: "FullName ProfilePic Followers" })
+    .sort({ createdAt: -1 }); 
 };
 
 
 exports.getTag = async () => {
-  return await Tag.find({});
+  return await Tag.find({isApproved:true});
 };
 
 
@@ -64,3 +70,7 @@ exports.deleteOne = async (query) => {
 
 
 
+exports.getPosts = async (query) => {
+  return await Post.find(query)
+  .populate({ path: "Author", select: "FullName ProfilePic Followers" })
+};

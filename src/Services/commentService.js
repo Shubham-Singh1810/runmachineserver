@@ -2,7 +2,6 @@ const Comment = require("../Model/commentSchema");
 const Post = require("../Model/postSchema");
 
 exports.create = async (query) => {
-  console.log(query)
   return await Comment.create(query);
 };
 

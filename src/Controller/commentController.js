@@ -28,13 +28,13 @@ commentController.post("/create/:_id", async (req, res) => {
 
     const commentData = await commentService.create({
       Author: req.body.Author,
-      CommentedOn: req.body.CommentedOn,
+      Comment:req.body.Comment,
       postId: postData._id, // Ensure postData is defined before accessing its _id property
     });
 
     await postService.findOneAndUpdate(
       { _id: postId },
-      { $push: { comments: commentData._id } }
+      { $push: { Commnets: commentData._id } }
     );
 
     sendResponse(res, 200, "Success", {

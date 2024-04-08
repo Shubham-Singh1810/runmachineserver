@@ -347,6 +347,20 @@ userController.get("/blockUsers/:id",  async (req, res) => {
 });
 
 
+userController.get("/suggested/account/:id",  async (req, res) => {
+  try {
+    const userData = await userServices.getSuggestedUserAcounts(req.params.id);
+    sendResponse(res, 200, "Success", {
+      message: "Suggested Users list retrieved successfully!",
+      userData,
+    });
+  } catch (error) {
+    console.log(error);
+    sendResponse(res, 500, "Failed", {
+      message: error.message || "Internal server error",
+    });
+  }
+});
 
 
 

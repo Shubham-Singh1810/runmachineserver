@@ -76,5 +76,13 @@ exports.getBlockUsers = async (currentUserId) => {
   }
 };
 
-
+exports.getSuggestedUserAcounts = async (id) => {
+  try {
+    const user = await User.find().select("-Password")
+    return user;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Error retrieving suggested account list");
+  }
+};
 
