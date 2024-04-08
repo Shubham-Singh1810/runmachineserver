@@ -28,8 +28,6 @@ exports.getUser = async (query) => {
   return await User.findOne(query);
 };
 
-
-
 exports.getFollowing = async (currentUserId) => {
   try {
     const user = await User.findOne({_id:currentUserId}).select("Followings")
@@ -86,3 +84,6 @@ exports.getSuggestedUserAcounts = async (id) => {
   }
 };
 
+exports.searchUsers = async (query) => {
+  return await User.find(query);
+};

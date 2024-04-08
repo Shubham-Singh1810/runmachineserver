@@ -362,6 +362,21 @@ userController.get("/suggested/account/:id",  async (req, res) => {
   }
 });
 
+userController.post("/searchUser", async (req, res) => {
+  try {
+    const searchKey  = req.body.searchKey;
+    const data = await userServices.searchUsers({FullName: { $regex: searchKey, $options: "i" }});
+    sendResponse(res, 200, "Success", {
+      message: "Search User details retrieved successfully!",
+      data: data,
+    });
+  } catch (error) {
+    console.log(error);
+    sendResponse(res, 500, "Failed", {
+      message: error.message || "Internal server error",
+    });
+  }
+});
 
 
 module.exports = userController;

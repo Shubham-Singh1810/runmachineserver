@@ -122,6 +122,8 @@ commentController.get("/list/:id", async (req, res) => {
 
 
 
+
+
 commentController.post("/likes/:id", async (req, res) => {
   try {
     if (!req.params.id) {
@@ -140,11 +142,6 @@ commentController.post("/likes/:id", async (req, res) => {
       });
     }
 
-    // Ensure that Likes property exists and initialize it as an empty array if not
-    if (!comment.Likes) {
-      comment.Likes = [];
-    }
-
     let message, updateQuery;
     if (comment.Likes.includes(currentUserId)) {
       updateQuery = { $pull: { Likes: currentUserId } }; // Remove the currentUserId from Likes array
@@ -154,10 +151,10 @@ commentController.post("/likes/:id", async (req, res) => {
       message = "liked";
     }
 
-    // Update the comment document with the new Likes array
+    // Update the post document with the new Likes array
     await commentService.findOneAndUpdate({ _id: commentId }, updateQuery);
 
-    // Fetch the updated comment after the update
+    // Fetch the updated post after the update
     const updatedComment = await commentService.findOne({ _id: commentId });
 
     sendResponse(res, 200, "Success", {
@@ -171,6 +168,5 @@ commentController.post("/likes/:id", async (req, res) => {
     });
   }
 });
-
 
 module.exports = commentController;

@@ -37,7 +37,7 @@ exports.myfeed = async (id) => {
 
 
 exports.getTag = async () => {
-  return await Tag.find({isApproved:true});
+  return await Tag.find({});
 };
 
 

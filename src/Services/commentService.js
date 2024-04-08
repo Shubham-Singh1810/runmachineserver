@@ -7,9 +7,7 @@ exports.create = async (query) => {
 
 
 exports.listAllComments = async (id) => {
-  return await Comment.find({postId: id}).populate({
-      path: "Author", select: 'FullName'
-  })
+  return await Comment.find({postId: id}).populate({ path: "Author", select: "FullName ProfilePic Followers" })
 }
 
 

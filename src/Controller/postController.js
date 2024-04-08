@@ -35,6 +35,8 @@ postController.post("/create",
         obj = { ...req.body, ImgUrl: bannerImg.url };
       }
       const PostCreated = await Post.create(obj);
+      let updateMyPost = { $push: { MyPost: PostCreated?._id } }
+      await userService.updateUser({ _id: obj?.Author }, updateMyPost);
       sendResponse(res, 200, "Success", {
         message: "Post created successfully!",
         PostData: PostCreated,
@@ -48,7 +50,6 @@ postController.post("/create",
 });
 
 postController.get("/:id", async (req, res) => {
-  console.log("sjb")
   try {
     if (!req.params.id) {
       return sendResponse(res, 422, "Failed", {
@@ -149,145 +150,6 @@ postController.post("/likes/:id", async (req, res) => {
   }
 });
 
-postController.post("/createTag", async (req, res) => {
-  try {
-    const { userId, Tag, isApproved } = req.body;
-
-    const tagData = { userId, Tag, isApproved };
-
-    const TagCreated = await TagData.create(tagData);
-
-    sendResponse(res, 200, "Success", {
-      message: "Tag created successfully!",
-      TagRecord: TagCreated,
-    });
-  } catch (error) {
-    console.error(error);
-    sendResponse(res, 500, "Failed", {
-      message: error.message || "Internal server error",
-    });
-  }
-});
-
-
-postController.get("/getTag", async (req, res) => {
-  try {
-    const data = await postService.getTag();
-    sendResponse(res, 200, "Success", {
-      message: "Tag list retrieved successfully!",
-      data: data,
-    });
-  } catch (error) {
-    console.log(error);
-    sendResponse(res, 500, "Failed", {
-      message: error.message || "Internal server error",
-    });
-  }
-});
-
-
-postController.put("/updateTag", async (req, res) => {
-  try {
-    const data = await postService.updateTag({ _id: req.body._id }, req.body);
-    sendResponse(res, 200, "Success", {
-      message: "Tag updated successfully!",
-      data: data,
-    });
-  } catch (error) {
-    console.log(error);
-    sendResponse(res, 500, "Failed", {
-      message: error.message || "Internal server error",
-    });
-  }
-});
-
-
-postController.delete("/deleteTag", async (req, res) => {
-  try {
-    const data = await postService.deleteOne({ _id: req.body.TagId });
-    sendResponse(res, 200, "Success", {
-      message: "Tag deleted successfully!",
-      data,
-    });
-  } catch (error) {
-    console.log(error);
-    sendResponse(res, 500, "Failed", {
-      message: error.message || "Internal server error",
-    });
-  }
-}
-);
-
-
-postController.post("/createLocation", async (req, res) => {
-  try {
-    const { userId, Location, isApproved } = req.body;
-
-    const locationData = { userId, Location, isApproved };
-
-    const LocationCreated = await LocationData.create(locationData);
-
-    sendResponse(res, 200, "Success", {
-      message: "Location created successfully!",
-      LocationRecord: LocationCreated,
-    });
-  } catch (error) {
-    console.error(error);
-    sendResponse(res, 500, "Failed", {
-      message: error.message || "Internal server error",
-    });
-  }
-});
-
-
-postController.get("/getLocation", async (req, res) => {
-  try {
-    // const { userId } = req.query;
-    const data = await postService.getLocation();
-    sendResponse(res, 200, "Success", {
-      message: "Location list retrieved successfully!",
-      data: data,
-    });
-  } catch (error) {
-    console.log(error);
-    sendResponse(res, 500, "Failed", {
-      message: error.message || "Internal server error",
-    });
-  }
-});
-
-
-postController.put("/updateLocation", async (req, res) => {
-  try {
-    const data = await postService.updateLocation({ _id: req.body._id }, req.body);
-    sendResponse(res, 200, "Success", {
-      message: "Location updated successfully!",
-      data: data,
-    });
-  } catch (error) {
-    console.log(error);
-    sendResponse(res, 500, "Failed", {
-      message: error.message || "Internal server error",
-    });
-  }
-});
-
-
-postController.delete("/deleteLocation", async (req, res) => {
-  try {
-    const data = await postService.deleteOne({ _id: req.body.LocationId });
-    sendResponse(res, 200, "Success", {
-      message: "Location deleted successfully!",
-      data,
-    });
-  } catch (error) {
-    console.log(error);
-    sendResponse(res, 500, "Failed", {
-      message: error.message || "Internal server error",
-    });
-  }
-}
-);
 
 postController.post("/save/:id", async (req, res) => {
   try {
