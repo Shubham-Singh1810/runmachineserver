@@ -69,6 +69,26 @@ postController.get("/:id", async (req, res) => {
   }
 });
 
+postController.delete("/:id", async (req, res) => {
+  try {
+    if (!req.params.id) {
+      return sendResponse(res, 422, "Failed", {
+        message: "Params not found!",
+      });
+    }
+    const posts = await postService.deletePost({ _id: req.params.id});
+    sendResponse(res, 200, "Success", {
+      message: "Post delete successfully",
+      data: posts,
+    });
+  } catch (error) {
+    console.log(error);
+    sendResponse(res, 500, "Failed", {
+      message: error.message || "Internal server error",
+    });
+  }
+});
+
 postController.get("/user/:id", async (req, res) => {
   try {
     if (!req.params.id) {

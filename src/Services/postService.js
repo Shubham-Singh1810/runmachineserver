@@ -74,3 +74,8 @@ exports.getPosts = async (query) => {
   return await Post.find(query)
   .populate({ path: "Author", select: "FullName ProfilePic Followers" })
 };
+
+
+exports.deletePost = async (query) => {
+  return await Post.deleteOne(query);
+};
