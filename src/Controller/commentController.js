@@ -7,7 +7,7 @@ const commentService = require("../Services/commentService");
 const Comment = require("../Model/commentSchema");
 const Post = require("../Model/postSchema");
 const { default: mongoose } = require("mongoose");
-// hg
+
 
 
 commentController.post("/create/:_id", async (req, res) => {
