@@ -5,7 +5,7 @@ const { sendResponse } = require("../Utils/common");
 const postService = require("../Services/postService");
 const commentService = require("../Services/commentService");
 const Comment = require("../Model/commentSchema");
-const Post = require("../Model/postSchema");
+const Post = require("../Model/postSchema"); 
 const { default: mongoose } = require("mongoose");
 
 
